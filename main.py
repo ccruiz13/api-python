@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from app.infraestructure.input.rest.subscription_router import SubscriptionRouter
-from app.infraestructure.commons.route_constants import SubscriptionRoute
+from app.infraestructure.commons.route_constants import MessaginRouting
 
 load_dotenv()
 
 app = FastAPI(
-    title=SubscriptionRoute.TITLE,
-    version=SubscriptionRoute.VERSION,
-    description=SubscriptionRoute.DESCRIPTION
+    title=MessaginRouting.TITLE,
+    version=MessaginRouting.VERSION,
+    description=MessaginRouting.DESCRIPTION
 )
 
 subscription_router = SubscriptionRouter().get_router()
