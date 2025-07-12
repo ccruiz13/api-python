@@ -1,10 +1,15 @@
 import os
 from app.infraestructure.exception.MissingConfigurationException import MissingConfigurationException
 
+import os
+
+import os
+
 class DynamoTableConfig:
     @staticmethod
     def get_subscription_table_name() -> str:
-        name = os.getenv("SUBSCRIPTION_TABLE_NAME", "customer_fund_subscription")
-        if not name:
-            raise MissingConfigurationException("SUBSCRIPTION_TABLE_NAME")
-        return name
+        table_name = os.getenv("SUBSCRIPTION_TABLE_NAME")
+        if not table_name:
+            raise RuntimeError("Missing environment variable: SUBSCRIPTION_TABLE_NAME")
+        return table_name
+
