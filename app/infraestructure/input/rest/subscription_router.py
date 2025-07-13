@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status
+from fastapi.exceptions import RequestValidationError
 from starlette.responses import JSONResponse
-
 from app.application.dto.request.subscription_request import SubscriptionRequest
-from app.application.handler.subscription_handler import SubscriptionHandler
+from app.infraestructure.commons.error_handler import ErrorHandler
 from app.infraestructure.commons.route_constants import MessaginRouting
 from app.infraestructure.config.dependency_injection import DependencyContainer
 from app.infraestructure.input.response.generic_response import SuccessResponse, ErrorResponse
@@ -15,6 +15,7 @@ class SubscriptionRouter:
         self.router = APIRouter(prefix="/subscription", tags=["subscription"])
         self._configure_routes()
 
+
     def _configure_routes(self):
         handler = DependencyContainer.subscription_handler()
 
@@ -22,11 +23,23 @@ class SubscriptionRouter:
             path=MessaginRouting.CREATE_SUBSCRIPTION,
             status_code=status.HTTP_201_CREATED,
             response_model=SuccessResponse,
+            response_model_exclude_none=True,
             responses={
                 201: {"description": MessaginRouting.SUBSCRIPTION_SUCCESS, "model": SuccessResponse},
                 400: {"description": MessaginRouting.INVALID_REQUEST_MESSAGE, "model": ErrorResponse},
                 401: {"description": MessaginRouting.UNAUTHORIZED_MESSAGE, "model": ErrorResponse},
                 404: {"description": MessaginRouting.RESOURCE_NOT_FOUND_MESSAGE, "model": ErrorResponse},
+                422: {
+                    "description": MessaginRouting.INVALID_REQUEST_MESSAGE,
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "message": MessaginRouting.INVALID_REQUEST_MESSAGE,
+                                "error": "field -> name: field required"
+                            }
+                        }
+                    }
+                },
                 500: {"description": MessaginRouting.INTERNAL_SERVER_ERROR_MESSAGE, "model": ErrorResponse},
             }
         )
@@ -49,5 +62,5 @@ class SubscriptionRouter:
                         error = str(e)
                 ).dict())
 
-        def get_router(self):
+    def get_router(self):
             return self.router
