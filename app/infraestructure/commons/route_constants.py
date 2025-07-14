@@ -2,7 +2,7 @@ class MessaginRouting:
     PREFIX = "/subscriptions"
     TAG = "Subscriptions"
     CREATE_SUBSCRIPTION = "/create_subscription"
-    GET_SUBSCRIPTION_BY_ID = "/{subscription_id}"
+    GET_CUSTOMER_BY_ID = "/{customer_id}"
     CREATE_SUBSCRIPTION_NAME = "create-subscription"
     TITLE = "API de Gestión de Fondos de Inversión"
     VERSION = "1.0.0"

@@ -8,5 +8,5 @@ class OutputSuscriptionPort(ABC):
         pass
 
     @abstractmethod
-    def find_by_id(self, subscription_id: str) -> Suscription | None:
+    def get_by_customer_id(self, customer_id: str) -> Suscription | None:
         pass

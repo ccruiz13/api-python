@@ -9,6 +9,6 @@ class SubscriptionInputPort(ABC):
         pass
 
     @abstractmethod
-    def find_by_id(self, subscription_id: str) -> Suscription:
+    def get_by_customer_id(self, subscription_id: str) -> Suscription:
         pass
 

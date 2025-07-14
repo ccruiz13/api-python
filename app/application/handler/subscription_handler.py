@@ -3,7 +3,8 @@ from app.application.dto.response.subscription_response import SubscriptionRespo
 from app.domain.model.suscription import Suscription
 from app.domain.ports.input.input_suscription_port import SubscriptionInputPort
 from app.application.mapper.subscription_request_mapper import SubscriptionRequestMapper
-from app.infraestructure.out.dynamodb.mapper.suscription_mapper import SubscriptionMapper
+from app.application.mapper.suscription_response_mapper import SuscriptionResponseMapper
+
 
 
 class SubscriptionHandler:
@@ -17,7 +18,7 @@ class SubscriptionHandler:
         create_subscription = self.user_case.create_subscription(subscription)
         return create_subscription
 
-    def get_subscription_by_id(self, subscription_id: str) -> SubscriptionResponse:
-        subscription = self.user_case.find_by_id(subscription_id)
-        response_dto = SubscriptionMapper.to_response(subscription)
+    def get_by_customer_id(self, customer_id: str) -> SubscriptionResponse:
+        subscription = self.user_case.get_by_customer_id(customer_id)
+        response_dto = SuscriptionResponseMapper.to_response(subscription)
         return response_dto

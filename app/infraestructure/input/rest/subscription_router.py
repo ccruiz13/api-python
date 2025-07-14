@@ -42,7 +42,7 @@ class SubscriptionRouter:
             return SuccessResponse(message=MessaginRouting.SUBSCRIPTION_SUCCESS)
 
         @self.router.get(
-            path=MessaginRouting.GET_SUBSCRIPTION_BY_ID,
+            path=MessaginRouting.GET_CUSTOMER_BY_ID,
             status_code=status.HTTP_200_OK,
             response_model=SuccessResponse,
             responses={
@@ -63,8 +63,8 @@ class SubscriptionRouter:
                 500: {"description": MessaginRouting.INTERNAL_SERVER_ERROR_MESSAGE, "model": ErrorResponse},
             }
         )
-        def get_subscription(subscription_id: str):
-            response_dto = handler.get_subscription_by_id(subscription_id)
+        def get_subscription(customer_id: str):
+            response_dto = handler.get_by_customer_id(customer_id)
             return SuccessResponse(
                 message=MessaginRouting.SUBSCRIPTION_FOUND_MESSAGE,
                 data=response_dto

@@ -13,8 +13,8 @@ class SubscriptionAdapter(OutputSuscriptionPort):
         entity = SubscriptionMapper.to_entity(suscription)
         self.client.save(entity)
 
-    def find_by_id(self, subscription_id: str) -> Suscription | None:
-        item = self.client.get_by_id(subscription_id)
+    def get_by_customer_id(self, customer_id: str) -> Suscription | None:
+        item = self.client.get_by_customer_id(customer_id)
         if item:
             return SubscriptionMapper.to_domain(item)
         return None

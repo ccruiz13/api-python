@@ -1,5 +1,7 @@
 import boto3
 import os
+
+from boto3.dynamodb.conditions import Key
 from dotenv import load_dotenv
 from app.infraestructure.config.dynamo_tables import DynamoTableConfig
 from app.infraestructure.out.dynamodb.entities.subscription_entity import SuscriptionEntity
@@ -31,7 +33,13 @@ class SubscriptionDynamoClient:
         """Guarda una suscripción en DynamoDB."""
         self.table.put_item(Item=entity.to_item())
 
-    def get_by_id(self, subscription_id: str) -> dict | None:
-        """Consulta una suscripción por su ID."""
-        response = self.table.get_item(Key={"subscription_id": subscription_id})
-        return response.get("Item")
+    def get_by_customer_id(self, customer_id: str) -> SuscriptionEntity | None:
+        response = self.table.query(
+            IndexName="customer_id-index",
+            KeyConditionExpression=Key("customer_id").eq(customer_id)
+        )
+        items = response.get("Items", [])
+        if not items:
+            return None
+        return SuscriptionEntity(**items[0])
+

@@ -22,16 +22,16 @@ class SubscriptionUseCase(SubscriptionInputPort):
         self.output_port.save(subscription)
         return subscription
 
-    def find_by_id(self, subscription_id: str) -> Suscription | None:
+    def get_by_customer_id(self, customer_id: str) -> Suscription | None:
         """
         Retrieve a subscription from the output port by its ID.
 
-        :param subscription_id: The unique identifier of the subscription to be retrieved.
+        :param customer_id: The unique identifier of the subscription to be retrieved.
         :return: The subscription object if found, otherwise None.
         """
-        subscription = self.output_port.find_by_id(subscription_id)
+        subscription = self.output_port.get_by_customer_id(customer_id)
         if not subscription:
-            raise DomainConfigurationException(subscription_id)
+            raise DomainConfigurationException(customer_id)
         return subscription
 
 
