@@ -1,7 +1,7 @@
 import boto3
 import os
 
-from boto3.dynamodb.conditions import Key
+from boto3.dynamodb.conditions import Key, Attr
 from dotenv import load_dotenv
 
 from app.domain.constants.subscription_status import SubscriptionStatus
@@ -45,19 +45,30 @@ class SubscriptionDynamoClient:
             return None
         return SuscriptionEntity(**items[0])
 
-    def cancel_subscription(self, subscription_id: str) -> SuscriptionEntity | None:
+    def cancel_subscription(self, customer_id: str) -> SuscriptionEntity | None:
+        response = self.table.query(
+            IndexName="customer_id-index",
+            KeyConditionExpression=Key("customer_id").eq(customer_id),
+            FilterExpression=Attr("status").eq(SubscriptionStatus.ACTIVE.value)
+        )
 
-        original = self.table.get_item(Key={"subscription_id": subscription_id})
-        item = original.get("Item")
+        items = response.get("Items", [])
+        if not items:
+            return None
 
-        if not item:
-            return None  # No existe
+        # Mantenemos como dict hasta guardar
+        active_subscription = items[0]
+        subscription_id = active_subscription["subscription_id"]
 
-        item["status"] = SubscriptionStatus.CANCELLED.value
+        # Modificamos el campo
+        active_subscription["status"] = SubscriptionStatus.CANCELLED.value
 
-        self.table.put_item(Item=item)
+        # Guardamos la actualización
+        self.table.put_item(Item=active_subscription)
 
-        return SuscriptionEntity(**item)
+        # Convertimos a modelo Pydantic al final
+        return SuscriptionEntity(**active_subscription)
+
 
 
 

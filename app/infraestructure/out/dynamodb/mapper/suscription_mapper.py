@@ -23,5 +23,4 @@ class SubscriptionMapper:
             fund_id=entity.fund_id,
             amount=entity.amount,
             timestamp=entity.timestamp,
-            status=SubscriptionStatus(entity["status"])
-        )
+            status=SubscriptionStatus(entity.status))
