@@ -16,6 +16,5 @@ class SubscriptionAdapter(OutputSuscriptionPort):
     def find_by_id(self, subscription_id: str) -> Suscription | None:
         item = self.client.get_by_id(subscription_id)
         if item:
-            entity = SubscriptionMapper.to_entity_dict(item)
-            return SubscriptionMapper.to_domain(entity)
+            return SubscriptionMapper.to_domain(item)
         return None

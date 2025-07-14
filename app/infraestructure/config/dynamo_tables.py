@@ -1,5 +1,5 @@
 import os
-from app.infraestructure.exception.MissingConfigurationException import MissingConfigurationException
+from app.infraestructure.exception.missing_configuration_exception import MissingConfigurationException
 
 import os
 

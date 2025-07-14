@@ -1,7 +1,7 @@
 from app.application.dto.request.subscription_request import SubscriptionRequest
 from app.domain.model.suscription import Suscription
 
-class SubscriptionMapper:
+class SubscriptionRequestMapper:
     @staticmethod
     def to_domain(request: SubscriptionRequest) -> Suscription:
         return Suscription(

@@ -2,6 +2,7 @@ from app.domain.model.suscription import Suscription
 from  app.domain.ports.input.input_suscription_port import SubscriptionInputPort
 from app.domain.ports.output.output_suscription_port import OutputSuscriptionPort
 from datetime import datetime
+from app.domain.exception.domain_exception import DomainConfigurationException
 import uuid
 
 class SubscriptionUseCase(SubscriptionInputPort):
@@ -20,3 +21,18 @@ class SubscriptionUseCase(SubscriptionInputPort):
         subscription.timestamp = datetime.now()
         self.output_port.save(subscription)
         return subscription
+
+    def find_by_id(self, subscription_id: str) -> Suscription | None:
+        """
+        Retrieve a subscription from the output port by its ID.
+
+        :param subscription_id: The unique identifier of the subscription to be retrieved.
+        :return: The subscription object if found, otherwise None.
+        """
+        subscription = self.output_port.find_by_id(subscription_id)
+        if not subscription:
+            raise DomainConfigurationException(subscription_id)
+        return subscription
+
+
+

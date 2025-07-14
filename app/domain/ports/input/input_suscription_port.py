@@ -8,3 +8,7 @@ class SubscriptionInputPort(ABC):
     def create_subscription(self, subscription: Suscription) -> Suscription:
         pass
 
+    @abstractmethod
+    def find_by_id(self, subscription_id: str) -> Suscription:
+        pass
+
