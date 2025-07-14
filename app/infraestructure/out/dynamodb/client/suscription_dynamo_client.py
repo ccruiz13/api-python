@@ -3,6 +3,8 @@ import os
 
 from boto3.dynamodb.conditions import Key
 from dotenv import load_dotenv
+
+from app.domain.constants.subscription_status import SubscriptionStatus
 from app.infraestructure.config.dynamo_tables import DynamoTableConfig
 from app.infraestructure.out.dynamodb.entities.subscription_entity import SuscriptionEntity
 
@@ -42,4 +44,20 @@ class SubscriptionDynamoClient:
         if not items:
             return None
         return SuscriptionEntity(**items[0])
+
+    def cancel_subscription(self, subscription_id: str) -> SuscriptionEntity | None:
+
+        original = self.table.get_item(Key={"subscription_id": subscription_id})
+        item = original.get("Item")
+
+        if not item:
+            return None  # No existe
+
+        item["status"] = SubscriptionStatus.CANCELLED.value
+
+        self.table.put_item(Item=item)
+
+        return SuscriptionEntity(**item)
+
+
 

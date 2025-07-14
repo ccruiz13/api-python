@@ -18,6 +18,7 @@ class SubscriptionRouter:
             path=MessaginRouting.CREATE_SUBSCRIPTION,
             status_code=status.HTTP_201_CREATED,
             response_model=SuccessResponse,
+            response_model_exclude_none=True,
             responses={
                 201: {"description": MessaginRouting.SUBSCRIPTION_SUCCESS, "model": SuccessResponse},
                 400: {"description": MessaginRouting.INVALID_REQUEST_MESSAGE, "model": ErrorResponse},
@@ -69,6 +70,33 @@ class SubscriptionRouter:
                 message=MessaginRouting.SUBSCRIPTION_FOUND_MESSAGE,
                 data=response_dto
             )
+
+        @self.router.patch(
+            path=MessaginRouting.CANCEL_SUBSCRIPTION,
+            status_code=status.HTTP_200_OK,
+            response_model=SuccessResponse,
+            response_model_exclude_none=True,
+            responses={
+                200: {"description": MessaginRouting.SUBSCRIPTION_CANCELLED_MESSAGE, "model": SuccessResponse},
+                400: {"description": MessaginRouting.INVALID_REQUEST_MESSAGE, "model": ErrorResponse},
+                404: {"description": MessaginRouting.RESOURCE_NOT_FOUND_MESSAGE, "model": ErrorResponse},
+                422: {
+                    "description": MessaginRouting.INVALID_REQUEST_MESSAGE,
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "message": MessaginRouting.INVALID_REQUEST_MESSAGE,
+                                "error": "field -> name: field required"
+                            }
+                        }
+                    }
+                },
+                500: {"description": MessaginRouting.INTERNAL_SERVER_ERROR_MESSAGE, "model": ErrorResponse},
+            }
+        )
+        def cancel_subscription(subscription_id: str):
+            response = handler.cancel_subscription(subscription_id)
+            return SuccessResponse(message=MessaginRouting.SUBSCRIPTION_CANCELLED_MESSAGE, data=response)
 
     def get_router(self):
         return self.router
