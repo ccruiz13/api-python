@@ -2,6 +2,9 @@ from  dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 
+from app.domain.constants.subscription_status import SubscriptionStatus
+
+
 @dataclass
 class Suscription:
     subscription_id: str
@@ -9,3 +12,4 @@ class Suscription:
     fund_id: str
     amount: Decimal
     timestamp: datetime
+    status: SubscriptionStatus
