@@ -20,6 +20,14 @@ class MessaginRouting:
     SUBSCRIPTION_FOUND_MESSAGE = "Suscripción encontrada exitosamente",
     SUBSCRIPTION_CANCELLED_MESSAGE="Suscripcion cancelada exitosamente"
 
+    #constantes twilio
+    # app/infraestructure/out/constants/notification_constants.py
+
+    DEFAULT_EMAIL = "cliente@btg.com"
+    DEFAULT_PHONE = "+573001234567"
+    DEFAULT_SUBJECT = "Notificación de Suscripción BTG Funds"
+
+
 
 
 
