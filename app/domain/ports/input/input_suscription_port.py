@@ -9,10 +9,6 @@ class SubscriptionInputPort(ABC):
         pass
 
     @abstractmethod
-    def get_by_customer_id(self, customer_id: str) -> Suscription:
-        pass
-
-    @abstractmethod
-    def cancel_subscription(self, customer_id: str) -> Suscription:
+    def get_by_customer_id(self, subscription_id: str) -> Suscription:
         pass
 

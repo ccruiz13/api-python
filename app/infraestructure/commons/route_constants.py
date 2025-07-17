@@ -3,7 +3,6 @@ class MessaginRouting:
     TAG = "Subscriptions"
     CREATE_SUBSCRIPTION = "/create_subscription"
     GET_CUSTOMER_BY_ID = "/{customer_id}"
-    CANCEL_SUBSCRIPTION = "/canceled_subscription/{customer_id}"
     CREATE_SUBSCRIPTION_NAME = "create-subscription"
     TITLE = "API de Gestión de Fondos de Inversión"
     VERSION = "1.0.0"
@@ -17,8 +16,7 @@ class MessaginRouting:
     UNAUTHORIZED_MESSAGE="No autorizado"
     RESOURCE_NOT_FOUND_MESSAGE="Recurso no encontrado"
     INTERNAL_SERVER_ERROR_MESSAGE="Error interno del servidor"
-    SUBSCRIPTION_FOUND_MESSAGE = "Suscripción encontrada exitosamente",
-    SUBSCRIPTION_CANCELLED_MESSAGE="Suscripcion cancelada exitosamente"
+    SUBSCRIPTION_FOUND_MESSAGE = "Suscripción encontrada exitosamente"
 
 
 

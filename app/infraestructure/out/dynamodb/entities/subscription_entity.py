@@ -9,7 +9,6 @@ class SuscriptionEntity(BaseModel):
     fund_id: str
     amount: Decimal
     timestamp: str
-    status: str
 
     def to_item(self) -> dict:
         return self.model_dump()
