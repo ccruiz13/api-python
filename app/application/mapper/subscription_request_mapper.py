@@ -9,6 +9,5 @@ class SubscriptionRequestMapper:
             customer_id=request.customer_id,
             fund_id=request.fund_id,
             amount=request.amount,
-            timestamp=None,
-            status=None
+            timestamp=None
         )
