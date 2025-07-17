@@ -15,6 +15,7 @@ class NotificationAdapter(ApiClient):
 
     def sendNotification(self, notification: Notification) -> None:
         print('URL de notificaciones ' , self.notifacion_url)
+        print('Entro a la url')
         payload = {
             "email": notification.email,
             "phone": notification.phone,
