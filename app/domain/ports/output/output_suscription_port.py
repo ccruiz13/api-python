@@ -10,3 +10,7 @@ class OutputSuscriptionPort(ABC):
     @abstractmethod
     def get_by_customer_id(self, customer_id: str) -> Suscription | None:
         pass
+
+    @abstractmethod
+    def cancel_subscription(self, customer_id: str) -> Suscription | None:
+        pass
