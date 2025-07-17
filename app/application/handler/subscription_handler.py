@@ -22,7 +22,3 @@ class SubscriptionHandler:
         subscription = self.user_case.get_by_customer_id(customer_id)
         response_dto = SuscriptionResponseMapper.to_response(subscription)
         return response_dto
-
-    def cancel_subscription(self, subscription_id: str) -> Suscription:
-        subscription = self.user_case.cancel_subscription(subscription_id)
-        return subscription

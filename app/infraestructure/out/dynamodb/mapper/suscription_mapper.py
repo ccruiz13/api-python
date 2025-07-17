@@ -1,4 +1,3 @@
-from app.domain.constants.subscription_status import SubscriptionStatus
 from app.domain.model.suscription import Suscription
 from  app.infraestructure.out.dynamodb.entities.subscription_entity import  SuscriptionEntity
 
@@ -11,8 +10,7 @@ class SubscriptionMapper:
             customer_id=suscription.customer_id,
             fund_id=suscription.fund_id,
             amount=suscription.amount,
-            timestamp=suscription.timestamp.isoformat(),
-            status=suscription.status.value
+            timestamp=suscription.timestamp.isoformat()
         )
 
     @staticmethod
@@ -22,5 +20,5 @@ class SubscriptionMapper:
             customer_id=entity.customer_id,
             fund_id=entity.fund_id,
             amount=entity.amount,
-            timestamp=entity.timestamp,
-            status=SubscriptionStatus(entity.status))
+            timestamp=entity.timestamp
+        )

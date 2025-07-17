@@ -18,9 +18,3 @@ class SubscriptionAdapter(OutputSuscriptionPort):
         if item:
             return SubscriptionMapper.to_domain(item)
         return None
-
-    def cancel_subscription(self, customer_id: str) -> Suscription | None:
-        item = self.client.cancel_subscription(customer_id)
-        if item:
-            return SubscriptionMapper.to_domain(item)
-        return None
