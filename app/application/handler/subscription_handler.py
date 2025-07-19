@@ -12,10 +12,10 @@ class SubscriptionHandler:
     def __init__(self, user_case: SubscriptionInputPort):
         self.user_case = user_case
 
-    def create_subscription(self, request: SubscriptionRequest) -> Suscription:
+    def create_subscription(self, request: SubscriptionRequest, token:str) -> Suscription:
         subscription = SubscriptionRequestMapper.to_domain(request)
 
-        create_subscription = self.user_case.create_subscription(subscription)
+        create_subscription = self.user_case.create_subscription(subscription, token)
         return create_subscription
 
     def get_by_customer_id(self, customer_id: str) -> SubscriptionResponse:

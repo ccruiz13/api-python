@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Request
 from app.application.dto.request.subscription_request import SubscriptionRequest
 from app.application.handler.subscription_handler import SubscriptionHandler
 from app.infraestructure.input.response.generic_response import SuccessResponse, ErrorResponse
@@ -38,8 +38,14 @@ class SubscriptionRouter:
                 500: {"description": MessaginRouting.INTERNAL_SERVER_ERROR_MESSAGE, "model": ErrorResponse},
             }
         )
-        def create_subscription(request: SubscriptionRequest):
-            handler.create_subscription(request)
+        def create_subscription(request: Request, body: SubscriptionRequest):
+            auth_header = request.headers.get(MessaginRouting.AUTHORIZATION_HEADER)
+            token = None
+
+            if auth_header and auth_header.startswith(MessaginRouting.BEARER_PREFIX):
+                token = auth_header.replace(MessaginRouting.BEARER_PREFIX, '')
+
+            handler.create_subscription(body, token)
             return SuccessResponse(message=MessaginRouting.SUBSCRIPTION_SUCCESS)
 
         @self.router.get(

@@ -13,15 +13,16 @@ class NotificationAdapter(ApiClient):
 
         self.notifacion_url =  f"{url}:{node_port}/notifications"
 
-    def sendNotification(self, notification: Notification) -> None:
+    def sendNotification(self, notification: Notification, token:str) -> None:
         print('URL de notificaciones ' , self.notifacion_url)
         payload = {
             "email": notification.email,
             "phone": notification.phone,
             "message": notification.message
         }
+        headers = {"Authorization": f"Bearer {token}"}
         try:
-            response = httpx.post(self.notifacion_url, json=payload)
+            response = httpx.post(self.notifacion_url, json=payload, headers=headers)
             response.raise_for_status()
         except httpx.HTTPError as e:
             raise MissingConfigurationException(f"Error al enviar notificación: {e}")
