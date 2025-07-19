@@ -17,6 +17,14 @@ class MessaginRouting:
     RESOURCE_NOT_FOUND_MESSAGE="Recurso no encontrado"
     INTERNAL_SERVER_ERROR_MESSAGE="Error interno del servidor"
     SUBSCRIPTION_FOUND_MESSAGE = "Suscripción encontrada exitosamente"
+    INVALID_TOKEN_ERROR = 'El token proporcionado no es válido.'
+
+    #TOKEN
+    DOCS_URL = '/docs'
+    OPENAPI_URL = '/openapi.json'
+    AUTHORIZATION_HEADER = 'Authorization'
+    BEARER_PREFIX = 'Bearer '
+
 
 
 
