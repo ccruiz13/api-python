@@ -17,7 +17,7 @@ class SubscriptionUseCase(SubscriptionInputPort):
         self.notification_client = notification_client
 
 
-    def create_subscription(self, subscription: Suscription) -> Suscription:
+    def create_subscription(self, subscription: Suscription, token:str) -> Suscription:
         """
         Save a subscription to the output port.
 
@@ -31,7 +31,7 @@ class SubscriptionUseCase(SubscriptionInputPort):
         notification = Notification(email=DomainConstans.DEFAULT_EMAIL,
                                     phone=DomainConstans.DEFAULT_PHONE,
                                     message=DomainConstans.DEFAULT_SUBJECT)
-        self.notification_client.sendNotification(notification)
+        self.notification_client.sendNotification(notification, token)
         return subscription
 
     def get_by_customer_id(self, customer_id: str) -> Suscription | None:

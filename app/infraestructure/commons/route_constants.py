@@ -19,6 +19,7 @@ class MessaginRouting:
     INTERNAL_SERVER_ERROR_MESSAGE="Error interno del servidor"
     SUBSCRIPTION_FOUND_MESSAGE = "Suscripción encontrada exitosamente",
     SUBSCRIPTION_CANCELLED_MESSAGE="Suscripcion cancelada exitosamente"
+    INVALID_TOKEN_ERROR = 'El token proporcionado no es válido.'
 
     #constantes twilio
     # app/infraestructure/out/constants/notification_constants.py
@@ -26,6 +27,12 @@ class MessaginRouting:
     DEFAULT_EMAIL = "cliente@btg.com"
     DEFAULT_PHONE = "+573001234567"
     DEFAULT_SUBJECT = "Notificación de Suscripción BTG Funds"
+
+    # TOKEN
+    DOCS_URL = '/docs'
+    OPENAPI_URL = '/openapi.json'
+    AUTHORIZATION_HEADER = 'Authorization'
+    BEARER_PREFIX = 'Bearer '
 
 
 

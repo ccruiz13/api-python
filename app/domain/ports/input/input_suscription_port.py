@@ -5,7 +5,7 @@ from app.domain.model.suscription import Suscription
 class SubscriptionInputPort(ABC):
 
     @abstractmethod
-    def create_subscription(self, subscription: Suscription) -> Suscription:
+    def create_subscription(self, subscription: Suscription, token:str) -> Suscription:
         pass
 
     @abstractmethod
