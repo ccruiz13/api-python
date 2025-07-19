@@ -40,9 +40,11 @@ class SubscriptionRouter:
         )
         def create_subscription(request: Request, body: SubscriptionRequest):
             auth_header = request.headers.get(MessaginRouting.AUTHORIZATION_HEADER)
+            token = None
+
             if auth_header and auth_header.startswith(MessaginRouting.BEARER_PREFIX):
                 token = auth_header.replace(MessaginRouting.BEARER_PREFIX, '')
-            token = None
+
             handler.create_subscription(body, token)
             return SuccessResponse(message=MessaginRouting.SUBSCRIPTION_SUCCESS)
 
