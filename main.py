@@ -1,36 +1,37 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
+from mangum import Mangum
 from dotenv import load_dotenv
-from fastapi.security import HTTPBearer
-from fastapi.openapi.models import APIKey
-from fastapi.openapi.utils import get_openapi
-from fastapi.middleware.cors import CORSMiddleware
+import os
 
 from app.infraestructure.input.rest.subscription_router import SubscriptionRouter
 from app.infraestructure.commons.route_constants import MessaginRouting
 from app.infraestructure.config.exception_configurator import ExceptionConfigurator
 from app.infraestructure.security.auth_validator import AuthValidator
 
+# Si bien dotenv no es obligatorio en Lambda, lo dejamos por compatibilidad local
 load_dotenv()
 
-security_scheme = HTTPBearer()
-
+# Inicializa la app FastAPI
 app = FastAPI(
     title=MessaginRouting.TITLE,
     version=MessaginRouting.VERSION,
-    description=MessaginRouting.DESCRIPTION,
-    swagger_ui_oauth2_redirect_url=None,  # evita errores de oauth2 redirect
-    openapi_tags=[],
-    dependencies=[Depends(security_scheme)]
+    description=MessaginRouting.DESCRIPTION
 )
 
-# Rutas
+# Rutas protegidas por token
 subscription_router = SubscriptionRouter().get_router()
 app.include_router(subscription_router)
 
-# Excepciones
+# Configurar manejo de excepciones
 ExceptionConfigurator.register(app)
+
+# Middleware para validar token llamando al decode en Java
 app.middleware("http")(AuthValidator())
 
+# Handler para AWS Lambda con Mangum
+handler = Mangum(app)
+
+# Para desarrollo local (opcional)
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PYTHON_RUTE", 8000)), reload=True)
